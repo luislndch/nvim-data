@@ -6,7 +6,7 @@ vim.call('plug#begin');
 Plug('preservim/nerdtree')
 Plug('ggandor/leap.nvim')
 Plug('folke/tokyonight.nvim')
-Plug('nvim-telescope/telescope.nvim',{['tag'] = '0.1.8'})
+Plug('nvim-telescope/telescope.nvim')
 Plug('williamboman/mason.nvim')
 Plug('nvim-treesitter/nvim-treesitter',{['do'] = ':TSUpdate'})
 Plug('windwp/nvim-ts-autotag')
@@ -14,8 +14,6 @@ Plug('windwp/nvim-autopairs')
 Plug('nvim-lua/plenary.nvim')
 Plug('numToStr/Comment.nvim')
 Plug('neoclide/coc.nvim',{['branch'] = 'release'})
-Plug('hrsh7th/vim-vsnip')
-Plug('hrsh7th/vim-vsnip-integ')
 Plug('akinsho/toggleterm.nvim',{['tag'] = '*'})
 Plug('t9md/vim-choosewin')
 Plug('mfussenegger/nvim-dap')
@@ -23,6 +21,8 @@ Plug('pangloss/vim-javascript')
 Plug('prettier/vim-prettier', {['do'] = 'yarn install --frozen-lockfile --production'})
 Plug('AndrewRadev/undoquit.vim')
 Plug('yorickpeterse/nvim-window');
+Plug('NeogitOrg/neogit');
+Plug('sindrets/diffview.nvim');
 
 vim.call('plug#end');
 
