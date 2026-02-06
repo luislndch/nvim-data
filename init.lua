@@ -23,6 +23,8 @@ Plug('AndrewRadev/undoquit.vim')
 Plug('yorickpeterse/nvim-window');
 Plug('NeogitOrg/neogit');
 Plug('sindrets/diffview.nvim');
+Plug('mbbill/undotree');
+Plug('nvim-telescope/telescope-fzf-native.nvim', { ['do'] = 'cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release --target install'});
 
 vim.call('plug#end');
 

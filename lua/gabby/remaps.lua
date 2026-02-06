@@ -1,16 +1,23 @@
+
+-- options
 vim.g.mapleader=",";
 vim.o.shiftwidth=4;
 vim.o.tabstop=4;
 vim.o.splitright=true;
 vim.o.splitbelow=true;
 vim.o.wrap=true;
+vim.o.shiftwidth=4;
+vim.o.relativenumber=true;
+vim.o.number=true;
+vim.o.scrolloff=0
+vim.g.choosewin_active=1;
 
 -- autocommands
 vim.api.nvim_create_augroup('mine', {clear=true})
 vim.api.nvim_create_augroup('comments', {clear=true});
 
 vim.api.nvim_create_autocmd({'BufEnter','BufWinEnter'},{
-    pattern={"*.jsx","*.js","*.java","*.css"},
+    pattern={"*.tsx","*.jsx","*.js","*.java","*.css"},
     group="comments",
     callback = function(args)
 	vim.keymap.set('i','<C-g>','/**/<Left><Left>  <Left>')
@@ -25,21 +32,26 @@ vim.api.nvim_create_autocmd({'BufEnter','BufWinEnter'},{
     end,
 });
 
+function change_indent_mode()
+	if vim.opt.indentexpr:get() == "nvim_treesitter#indent()" then 
+		vim.opt.indentexpr="none"
+		print "changing to default indents"
+	else
+		vim.opt.indentexpr="nvim_treesitter#indent()"
+		print "returning to treesitter indent"
+	end
+end
+
+vim.keymap.set('n','<leader>i', change_indent_mode);
+vim.keymap.set('i', '<A-i>', change_indent_mode);
+
+
+
 vim.api.nvim_create_autocmd({"FocusGained", "BufEnter","CursorHold"}, {
     pattern={"*"},
     group="mine",
     callback=function() vim.cmd('checktime') end,
 });
-
-vim.keymap.set('n','<leader>i',function()
-    if vim.opt.indentexpr:get() == "nvim_treesitter#indent()" then 
-	vim.opt.indentexpr="none"
-	print "changing to default indents"
-    else
-	vim.opt.indentexpr="nvim_treesitter#indent()"
-	print "returning to treesitter indent"
-    end
-end);
 
 -- remaps
 vim.keymap.set('n', 'dl', [[^"*dg_]]);
@@ -47,8 +59,8 @@ vim.keymap.set('v', '<A-k>', [[dkPV]])
 vim.keymap.set('v', '<A-j>', [[djPV]])
 vim.keymap.set('n','<C-w>t',[[:split<CR><C-w>T]]);
 vim.keymap.set('n','<C-w>C',[[:tabclose<CR>]]);
-vim.keymap.set('n','<leader>gc',[[:%bd<CR>:b#<CR>:bd#<CR>]]);
-vim.keymap.set('n','<leader>gd',[[:bn<CR>:bd!#<CR>]]);
+vim.keymap.set('n','<leader>gc',[[:%bd<CR>:b#<CR>:bd!#<CR>]]);
+vim.keymap.set('n','<leader>gd',[[:b#<CR>:bd!#<CR>]]);
 vim.keymap.set('n','gn',[[:bn<CR>]]);
 vim.keymap.set('n','gp',[[:bp<CR>]]);
 vim.keymap.set('i','jk','<Escape>');
@@ -80,11 +92,11 @@ vim.keymap.set("n", "<A-m>",[[M]]);
 vim.keymap.set("n", "<C-PageDown>", [[:tabmove +1<CR>]]);
 vim.keymap.set("n", "<C-PageUp>", [[:tabmove -1<CR>]]);
 vim.keymap.set("n", ";", "@");
+vim.keymap.set("n", "<A-u>", vim.cmd.UndotreeToggle);
+vim.keymap.set("n","<A-o>", function() 
+	require('nvim-window').pick()
+end, {desc="switches between active windows"})
 
-vim.cmd[[nmap <A-w> <Plug>(choosewin)]];
-vim.keymap.set('n','<leader>s',function()
-    require('nvim-window').pick()
-end,{silent = true});
 vim.keymap.set('t','<C-k>',function() vim.cmd([[wincmd k]]) end);
 vim.keymap.set('t','<C-j>',function() vim.cmd([[wincmd j]]) end);
 vim.keymap.set('t','<c-h>',function() vim.cmd([[wincmd h]]) end);
@@ -97,24 +109,11 @@ vim.keymap.set('t','<C-q>',[[exit<CR>]]);
 vim.keymap.set('n','<A-i>',[[]]);
 vim.keymap.set('n','<A-s>',[[]]);
 vim.keymap.set('n', '<C-q>', [[q]]);
-vim.keymap.set('n', '<A-j>',[[]],{desc="moves down"});
-vim.keymap.set('n', '<A-k>',[[]],{desc="moves up"});
-vim.keymap.set('n', '<leader>s',[[:CocCommand snippets.editSnippets<CR>]],{desc="moves up"});
-
-vim.o.shiftwidth=4;
-vim.o.relativenumber=true;
-vim.o.number=true;
-vim.o.scrolloff=12
-vim.g.choosewin_active=1;
-
---My own harpoon functionality
-local list = {
-    q = "",
-    w = "",
-    a = "asshole",
-    s = "",
-}
-
+vim.keymap.set('n', '<A-j>',[[:bn<CR>]],{desc="buffer next"});
+vim.keymap.set('n', '<A-k>',[[:bp<CR>]],{desc="buffer previous"});
+vim.keymap.set('n', '<A-d>',[[:bn<CR>:bd!#<CR>]],{desc="buffer delete"});
+vim.keymap.set('n', '<leader>s',[[:CocCommand snippets.editSnippets<CR>]],{desc="Edit the snippet associated to the current file"});
+vim.keymap.set('n', '<C-w>N', [[:vsp<CR>]], {desc="Splits the current window vertically"});
 vim.keymap.set("n","<Leader>q", function() 
     print(list["a"]);
 end)
