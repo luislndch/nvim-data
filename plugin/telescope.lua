@@ -12,7 +12,7 @@ vim.keymap.set('n', '<leader>fh', builtin.help_tags, { desc = 'Telescope help ta
 -- inital setup
 require('telescope').setup{
     defaults = {
-	file_ignore_patterns = {"node_modules"},
+	file_ignore_patterns = {"node_modules",".git"},
 	vimgrep_arguments = vimgrep_arguments,
     },
     pickers = {

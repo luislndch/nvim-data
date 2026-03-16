@@ -17,7 +17,7 @@ vim.api.nvim_create_augroup('mine', {clear=true})
 vim.api.nvim_create_augroup('comments', {clear=true});
 
 vim.api.nvim_create_autocmd({'BufEnter','BufWinEnter'},{
-    pattern={"*.tsx","*.jsx","*.js","*.java","*.css"},
+    pattern={"*.tsx","*.ts","*.jsx","*.js","*.java","*.css"},
     group="comments",
     callback = function(args)
 	vim.keymap.set('i','<C-g>','/**/<Left><Left>  <Left>')
