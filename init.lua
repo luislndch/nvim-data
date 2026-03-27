@@ -33,16 +33,16 @@ require("mason").setup();
 require("nvim-autopairs").setup{};
 require('Comment').setup();
 
-require("toggleterm").setup{
-    size = function(term)
-	if term.direction == "horizontal" then
-	    return 15
-	elseif term.direction == "vertical" then
-	    return vim.o.columns * 0.4
-	end
-    end,
-    open_mapping = [[<c-\>]],
-}
+-- require("toggleterm").setup{
+--     size = function(term)
+-- 	if term.direction == "horizontal" then
+-- 	    return 15
+-- 	elseif term.direction == "vertical" then
+-- 	    return vim.o.columns * 0.4
+-- 	end
+--     end,
+--     open_mapping = [[<c-\>]],
+-- }
 
 --exceptions
 vim.cmd[[let g:prettier#config#use_tabs = 'false']]

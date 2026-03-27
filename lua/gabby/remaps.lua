@@ -68,8 +68,14 @@ vim.keymap.set('n', '<C-n>', vim.cmd.NERDTree);
 -- vim.keymap.set('n','<leader>kv', function() vim.cmd[[e $localappdata\nvim\lua\gabby\remaps.lua]] end, {desc = "opens remaps.lua"});
 vim.keymap.set('n','<leader>ki', function() vim.cmd[[e $MYVIMRC]] end, {desc = 'opesn init.lua'});
 vim.keymap.set('n','<leader>w', function() vim.opt.wrap=not vim.opt.wrap:get() end);
-vim.keymap.set('n','<leader><C-s>', [[:mksession! $localappdata\nvim-data\sessions\]]);
-vim.keymap.set('n','<leader><C-l>', [[:source $localappdata\nvim-data\sessions\]]);
+
+-- windows
+-- vim.keymap.set('n','<leader><C-s>', [[:mksession! $localappdata\nvim-data\sessions\]]);
+
+--linux
+vim.keymap.set('n','<leader><C-s>', [[:mksession! =stdpath("data")<CR>\sessions\]]);
+vim.keymap.set('n','<leader><C-l>', [[:session =stdpath("data")<CR>\sessions\]]);
+
 vim.keymap.set('n','<leader><C-d>', [[:!del $localappdata\nvim-data\sessions\]]);
 vim.keymap.set('n','<A-e>', vim.cmd.Ex);
 vim.keymap.set('n','<C-s>', vim.cmd.write);
