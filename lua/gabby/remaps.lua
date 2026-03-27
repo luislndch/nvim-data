@@ -65,8 +65,8 @@ vim.keymap.set('n','gn',[[:bn<CR>]]);
 vim.keymap.set('n','gp',[[:bp<CR>]]);
 vim.keymap.set('i','jk','<Escape>');
 vim.keymap.set('n', '<C-n>', vim.cmd.NERDTree);
-vim.keymap.set('n','<leader>kv', function() vim.cmd[[e $localappdata\nvim\lua\gabby\remaps.lua]] end, {desc = "opens remaps.lua"});
-vim.keymap.set('n','<leader>ki', function() vim.cmd[[e $localappdata\nvim\init.lua]] end, {desc = 'opesn init.lua'});
+-- vim.keymap.set('n','<leader>kv', function() vim.cmd[[e $localappdata\nvim\lua\gabby\remaps.lua]] end, {desc = "opens remaps.lua"});
+vim.keymap.set('n','<leader>ki', function() vim.cmd[[e $MYVIMRC]] end, {desc = 'opesn init.lua'});
 vim.keymap.set('n','<leader>w', function() vim.opt.wrap=not vim.opt.wrap:get() end);
 vim.keymap.set('n','<leader><C-s>', [[:mksession! $localappdata\nvim-data\sessions\]]);
 vim.keymap.set('n','<leader><C-l>', [[:source $localappdata\nvim-data\sessions\]]);
@@ -117,6 +117,9 @@ vim.keymap.set('n', '<C-w>N', [[:vsp<CR>]], {desc="Splits the current window ver
 vim.keymap.set("n","<Leader>q", function() 
     print(list["a"]);
 end)
+vim.keymap.set("n", "<Leader>e", function()
+	vim.cmd("Ex");
+end);
 
 -- commands
 vim.api.nvim_create_user_command('Config',function() vim.cmd([[e C:\Users\gg\AppData\local\nvim\]]) end, {});
