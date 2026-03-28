@@ -1,4 +1,7 @@
 
+-- check OS
+local current_os = vim.loop.os_uname()['sysname'];
+
 -- options
 vim.g.mapleader=",";
 vim.o.shiftwidth=4;
@@ -73,8 +76,13 @@ vim.keymap.set('n','<leader>w', function() vim.opt.wrap=not vim.opt.wrap:get() e
 -- vim.keymap.set('n','<leader><C-s>', [[:mksession! $localappdata\nvim-data\sessions\]]);
 
 --linux
-vim.keymap.set('n','<leader><C-s>', [[:mksession! =stdpath("data")<CR>\sessions\]]);
-vim.keymap.set('n','<leader><C-l>', [[:session =stdpath("data")<CR>\sessions\]]);
+if current_os == "Linux" then
+	vim.keymap.set('n','<leader><C-s>', [[:mksession! =stdpath("data")<CR>/sessions/]]);
+	vim.keymap.set('n','<leader><C-l>', [[:source =stdpath("data")<CR>/sessions/]]);	
+elseif current_os == "Windows_NT" then
+	vim.keymap.set('n','<leader><C-s>', [[:mksession! =stdpath("data")<CR>\sessions\]]);
+	vim.keymap.set('n','<leader><C-l>', [[:source =stdpath("data")<CR>\sessions\]]);
+end
 
 vim.keymap.set('n','<leader><C-d>', [[:!del $localappdata\nvim-data\sessions\]]);
 vim.keymap.set('n','<A-e>', vim.cmd.Ex);
