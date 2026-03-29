@@ -14,7 +14,7 @@ vim.o.relativenumber=true;
 vim.o.number=true;
 vim.o.scrolloff=0
 vim.g.choosewin_active=1;
-vim.o.background="light";
+vim.o.background="dark";
 vim.o.termguicolors=true;
 
 -- autocommands
