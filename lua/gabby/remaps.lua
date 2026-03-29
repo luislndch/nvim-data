@@ -14,6 +14,8 @@ vim.o.relativenumber=true;
 vim.o.number=true;
 vim.o.scrolloff=0
 vim.g.choosewin_active=1;
+vim.o.background="light";
+vim.o.termguicolors=true;
 
 -- autocommands
 vim.api.nvim_create_augroup('mine', {clear=true})
@@ -68,7 +70,14 @@ vim.keymap.set('n','gn',[[:bn<CR>]]);
 vim.keymap.set('n','gp',[[:bp<CR>]]);
 vim.keymap.set('i','jk','<Escape>');
 vim.keymap.set('n', '<C-n>', vim.cmd.NERDTree);
--- vim.keymap.set('n','<leader>kv', function() vim.cmd[[e $localappdata\nvim\lua\gabby\remaps.lua]] end, {desc = "opens remaps.lua"});
+
+vim.keymap.set(
+	'n',
+	'<leader>kv',
+	[[:e =stdpath("config")<CR>/lua/gabby/remaps.lua<CR>]],
+	{desc = "opens remaps.lua"}
+);
+
 vim.keymap.set('n','<leader>ki', function() vim.cmd[[e $MYVIMRC]] end, {desc = 'opesn init.lua'});
 vim.keymap.set('n','<leader>w', function() vim.opt.wrap=not vim.opt.wrap:get() end);
 
