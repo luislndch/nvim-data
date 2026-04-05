@@ -1,5 +1,3 @@
-require('gabby.remaps')
-
 --autocmds
 
 vim.api.nvim_create_autocmd('StdinReadPre',{
@@ -13,6 +11,8 @@ vim.api.nvim_create_autocmd('VimEnter',{
 	vim.cmd[[if argc() == 0 && !exists('s:std_in') && v:this_session == '' | NERDTree | endif]]
     end
 })
+
+require('gabby.remaps')
 
 print('gabby initialized!')
 

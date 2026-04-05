@@ -1,4 +1,11 @@
 
+-- functions 
+function editRemap() 
+	local file = vim.fn.stdpath('config');
+	print(file);
+	vim.cmd("echo "+file)
+end
+
 -- check OS
 local current_os = vim.loop.os_uname()['sysname'];
 
@@ -145,7 +152,9 @@ vim.keymap.set("n", "<Leader>e", function()
 end);
 
 -- commands
-vim.api.nvim_create_user_command('Config',function() vim.cmd([[e C:\Users\gg\AppData\local\nvim\]]) end, {});
+vim.api.nvim_create_user_command('Config',function()
+	vim.cmd([[e C:\Users\gg\AppData\local\nvim\]]) 
+end, {});
 
 vim.api.nvim_create_user_command('Plugcfg',function() vim.cmd([[e C:\Users\gg\AppData\Local\nvim\plugin]]) end, {});
 
