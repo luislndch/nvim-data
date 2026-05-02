@@ -152,11 +152,18 @@ vim.keymap.set("n", "<Leader>e", function()
 end);
 
 local builtin = require('telescope.builtin')
-vim.keymap.set("n","<C-p>", builtin.find_files, {desc="Telescope find"});
+vim.keymap.set("n","<C-p>", builtin.buffers, {desc="Telescope find"});
+vim.keymap.set("n","<leader><C-f>", builtin.find_files, {desc="Telescope find"});
 
 -- commands
 vim.api.nvim_create_user_command('Config',function()
-	vim.cmd([[e C:\Users\gg\AppData\local\nvim\]]) 
+	path = vim.fn.expand(vim.fn.stdpath('config'));
+	vim.cmd([[e ]]..path..[[]]);
+end, {});
+
+vim.api.nvim_create_user_command('Data',function()
+	path = vim.fn.expand(vim.fn.stdpath('data'));
+	vim.cmd([[e ]]..path..[[]]);
 end, {});
 
 vim.api.nvim_create_user_command('Plugcfg',function() vim.cmd([[e C:\Users\gg\AppData\Local\nvim\plugin]]) end, {});

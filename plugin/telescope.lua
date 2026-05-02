@@ -5,10 +5,9 @@ require("telescope").setup{
 			"%.git/",
 			"%.jpg",
 			"build/",
-		}
+		},
 	},
 	pickers = {
-
 	},
 	extensions = {
 
