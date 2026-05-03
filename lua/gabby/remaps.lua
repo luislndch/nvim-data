@@ -23,6 +23,9 @@ vim.o.scrolloff=0
 vim.g.choosewin_active=1;
 vim.o.background="dark";
 vim.o.termguicolors=true;
+vim.opt.statusline="%F %r %m"
+vim.opt.statusline:append("%{coc#status()}")
+
 
 -- autocommands
 vim.api.nvim_create_augroup('mine', {clear=true})
@@ -82,6 +85,16 @@ vim.keymap.set(
 	'n',
 	'<leader>kv',
 	[[:e =stdpath("config")<CR>/lua/gabby/remaps.lua<CR>]],
+	{desc = "opens remaps.lua"}
+);
+
+vim.keymap.set(
+	'n',
+	'<leader>kv',
+	function()
+		path = vim.fn.expand(vim.fn.stdpath("config")).."/lua/gabby/remaps.lua";
+		vim.cmd("e "..path);
+	end,
 	{desc = "opens remaps.lua"}
 );
 
@@ -165,8 +178,6 @@ vim.api.nvim_create_user_command('Data',function()
 	path = vim.fn.expand(vim.fn.stdpath('data'));
 	vim.cmd([[e ]]..path..[[]]);
 end, {});
-
-vim.api.nvim_create_user_command('Plugcfg',function() vim.cmd([[e C:\Users\gg\AppData\Local\nvim\plugin]]) end, {});
 
 vim.api.nvim_create_user_command('Flush', function() 
     vim.cmd([[%bd]]);
