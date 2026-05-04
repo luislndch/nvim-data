@@ -9,6 +9,22 @@ end
 -- check OS
 local current_os = vim.loop.os_uname()['sysname'];
 
+-- fix clipboard when using WSL in windows
+if vim.fn.has('wsl') == 1 then
+vim.g.clipboard = {
+	name = 'WslClipboard',
+	copy = {
+		['+'] = 'clip.exe',
+		['*'] = 'clip.exe',
+	},
+	paste = {
+		['+'] = 'powershell.exe -c [Console]::Out.Write($(Get-Clipboard -Raw).tostring().replace("`r", ""))',
+		['*'] = 'powershell.exe -c [Console]::Out.Write($(Get-Clipboard -Raw).tostring().replace("`r", ""))',
+	},
+	cache_enabled = 0,
+}
+end
+
 -- options
 vim.g.mapleader=",";
 vim.o.shiftwidth=4;
@@ -111,6 +127,8 @@ if current_os == "Linux" then
 elseif current_os == "Windows_NT" then
 	vim.keymap.set('n','<leader><C-s>', [[:mksession! =stdpath("data")<CR>\sessions\]]);
 	vim.keymap.set('n','<leader><C-l>', [[:source =stdpath("data")<CR>\sessions\]]);
+else
+	print("Error: Cannot Resolve Operating System Name!");
 end
 
 vim.keymap.set('n','<leader><C-d>', [[:!del $localappdata\nvim-data\sessions\]]);
