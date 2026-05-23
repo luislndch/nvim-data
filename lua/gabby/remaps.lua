@@ -9,6 +9,9 @@ end
 -- check OS
 local current_os = vim.loop.os_uname()['sysname'];
 
+local data_dir = vim.fn.stdpath('data');
+local config_dir = vim.fn.stdpath('config');
+
 -- fix clipboard when using WSL in windows
 if vim.fn.has('wsl') == 1 then
 vim.g.clipboard = {
@@ -26,6 +29,7 @@ vim.g.clipboard = {
 end
 
 -- options
+vim.o.clipboard = 'unnamedplus'
 vim.g.mapleader=",";
 vim.o.shiftwidth=4;
 vim.o.tabstop=4;
@@ -117,19 +121,8 @@ vim.keymap.set(
 vim.keymap.set('n','<leader>ki', function() vim.cmd[[e $MYVIMRC]] end, {desc = 'opesn init.lua'});
 vim.keymap.set('n','<leader>w', function() vim.opt.wrap=not vim.opt.wrap:get() end);
 
--- windows
--- vim.keymap.set('n','<leader><C-s>', [[:mksession! $localappdata\nvim-data\sessions\]]);
-
---linux
-if current_os == "Linux" then
-	vim.keymap.set('n','<leader><C-s>', [[:mksession! =stdpath("data")<CR>/sessions/]]);
-	vim.keymap.set('n','<leader><C-l>', [[:source =stdpath("data")<CR>/sessions/]]);	
-elseif current_os == "Windows_NT" then
-	vim.keymap.set('n','<leader><C-s>', [[:mksession! =stdpath("data")<CR>\sessions\]]);
-	vim.keymap.set('n','<leader><C-l>', [[:source =stdpath("data")<CR>\sessions\]]);
-else
-	print("Error: Cannot Resolve Operating System Name!");
-end
+vim.keymap.set('n','<leader><C-s>', [[:mksession! ]]..data_dir..[[/sessions]]);
+vim.keymap.set('n','<leader><C-l>', [[:source! ]]..data_dir..[[/sessions]]);	
 
 vim.keymap.set('n','<leader><C-d>', [[:!del $localappdata\nvim-data\sessions\]]);
 vim.keymap.set('n','<A-e>', vim.cmd.Ex);
