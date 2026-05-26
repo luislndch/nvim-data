@@ -121,7 +121,7 @@ vim.keymap.set(
 vim.keymap.set('n','<leader>ki', function() vim.cmd[[e $MYVIMRC]] end, {desc = 'opesn init.lua'});
 vim.keymap.set('n','<leader>w', function() vim.opt.wrap=not vim.opt.wrap:get() end);
 
-vim.keymap.set('n','<leader><C-s>', [[:mksession ]]..data_dir..[[/sessions/]]);
+vim.keymap.set('n','<leader><C-s>', [[:mksession! ]]..data_dir..[[/sessions/]]);
 vim.keymap.set('n','<leader><C-l>', [[:source ]]..data_dir..[[/sessions/]]);	
 
 vim.keymap.set('n','<leader><C-d>', [[:!del $localappdata\nvim-data\sessions\]]);
