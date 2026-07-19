@@ -12,24 +12,7 @@ local current_os = vim.loop.os_uname()['sysname'];
 local data_dir = vim.fn.stdpath('data');
 local config_dir = vim.fn.stdpath('config');
 
--- fix clipboard when using WSL in windows
-if vim.fn.has('wsl') == 1 then
-vim.g.clipboard = {
-	name = 'WslClipboard',
-	copy = {
-		['+'] = 'clip.exe',
-		['*'] = 'clip.exe',
-	},
-	paste = {
-		['+'] = 'powershell.exe -c [Console]::Out.Write($(Get-Clipboard -Raw).tostring().replace("`r", ""))',
-		['*'] = 'powershell.exe -c [Console]::Out.Write($(Get-Clipboard -Raw).tostring().replace("`r", ""))',
-	},
-	cache_enabled = 0,
-}
-end
-
 -- options
-vim.o.clipboard = 'unnamedplus'
 vim.g.mapleader=",";
 vim.o.shiftwidth=4;
 vim.o.tabstop=4;
