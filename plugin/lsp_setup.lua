@@ -8,6 +8,7 @@ require("mason-lspconfig").setup({
 -- 2. Setup LSP Config with Completion Capabilities
 local lspconfig = require('lspconfig')
 local capabilities = require('cmp_nvim_lsp').default_capabilities()
+local util = require('lspconfig.util');
 
 -- Keybindings helper function (Runs only when LSP connects)
 local on_attach = function(_, bufnr)
@@ -21,7 +22,24 @@ end
 
 -- Configure Python and JS/TS servers
 lspconfig.pyright.setup({ on_attach = on_attach, capabilities = capabilities })
-lspconfig.ts_ls.setup({ on_attach = on_attach, capabilities = capabilities })
+lspconfig.ts_ls.setup({
+	on_attach = on_attach,
+	capabilities = capabilities,
+	root_dir = function(filename)
+		local project_root = util.root_pattern(
+			"package.json",
+			"jsconfig.json",
+			"tsconfig.json"
+		)(filename)
+
+		if not project_root or project_root:find("plugged") then
+			return vim.fn.getcwd();
+		end
+
+		return project_root;
+
+	end
+})
 
 -- 3. Autocompletion Setup (nvim-cmp)
 local cmp = require('cmp')
