@@ -56,7 +56,7 @@ cmp.setup({
     ['<S-Tab>'] = cmp.mapping.select_prev_item(),
   }),
   sources = cmp.config.sources({
-    { name = 'nvim_lsp' },
+    { name = 'nvim_lsp', priority = 1000},
     { name = 'vsnip' },
   }, {
     { name = 'buffer' },
