@@ -27,7 +27,6 @@ vim.g.choosewin_active=1;
 vim.o.background="dark";
 vim.o.termguicolors=true;
 vim.opt.statusline="%F %r %m"
-vim.opt.autochdir=true
 
 -- autocommands
 vim.api.nvim_create_augroup('mine', {clear=true})
