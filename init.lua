@@ -37,6 +37,7 @@ Plug 'hrsh7th/cmp-path'
 -- Snippet Engine (Required by nvim-cmp)
 Plug 'hrsh7th/cmp-vsnip'
 Plug 'hrsh7th/vim-vsnip'
+Plug "rafamadriz/friendly-snippets"
 
 vim.call('plug#end');
 

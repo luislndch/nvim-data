@@ -27,6 +27,7 @@ vim.g.choosewin_active=1;
 vim.o.background="dark";
 vim.o.termguicolors=true;
 vim.opt.statusline="%F %r %m"
+vim.opt.completeopt = {"menu", "menuone", "noselect"};
 
 -- autocommands
 vim.api.nvim_create_augroup('mine', {clear=true})
@@ -36,8 +37,8 @@ vim.api.nvim_create_autocmd({'BufEnter','BufWinEnter'},{
     pattern={"*.tsx","*.ts","*.jsx","*.js","*.java","*.css"},
     group="comments",
     callback = function(args)
-	vim.keymap.set('i','<C-g>','/**/<Left><Left>  <Left>')
-    end,
+		vim.keymap.set('i','<C-g>','/**/<Left><Left>  <Left>');
+    end
 });
 
 vim.api.nvim_create_autocmd({'BufEnter','BufWinEnter'},{
