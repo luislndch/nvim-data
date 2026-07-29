@@ -4,6 +4,8 @@ local Plug = vim.fn['plug#']
 vim.call('plug#begin');
 
 Plug('neovim/nvim-lspconfig')
+Plug 'nvim-lua/plenary.nvim'
+Plug 'pmizio/typescript-tools.nvim'
 Plug('preservim/nerdtree')
 Plug('https://codeberg.org/andyg/leap.nvim')
 Plug('folke/tokyonight.nvim')
