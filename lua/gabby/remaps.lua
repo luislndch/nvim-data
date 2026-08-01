@@ -28,8 +28,38 @@ vim.o.background="dark";
 vim.o.termguicolors=true;
 vim.opt.statusline="%F %r %m"
 vim.opt.completeopt = {"menu", "menuone", "noselect"};
+vim.opt.indentexpr="nvim_treesitter#indent()";
 
 -- autocommands
+
+-- Automatically show signature help when entering function
+vim.api.nvim_create_autocmd('TextChangedI',{
+	pattern = {"*js", "*.jsx", "*.ts", "*.tsx"},
+	callback = function ()
+		local line = vim.api.nvim_get_current_line()
+		local col = vim.api.nvim_win_get_cursor(0)[2]
+
+		-- Check the character exactly behind the cursor
+		local char_before = line:sub(col,col)
+
+		-- If you just tyepd an open paren or a comma, fetch
+		-- signature help natively
+		if char_before == "(" or char_before == "," then
+			pcall(vim.lsp.buf.signature_help, {
+				border = "rounded",
+				focusable = false,
+				close_events = {"InsertLeave", "BufHidden"}, -- Close cleanly when navigating away
+				relative = "cursor",
+				anchor = "SW",
+				row = -2,
+				col = 0,
+				max_height = 5,
+				max_width = 60,
+			})
+		end
+	end
+})
+
 vim.api.nvim_create_augroup('mine', {clear=true})
 vim.api.nvim_create_augroup('comments', {clear=true});
 
@@ -82,10 +112,15 @@ vim.keymap.set('n','gn',[[:bn<CR>]]);
 vim.keymap.set('n','gp',[[:bp<CR>]]);
 vim.keymap.set('i','jk','<Escape>');
 vim.keymap.set('n', '<C-n>', vim.cmd.NERDTree);
+vim.keymap.set('i', '<C-c>', '<Escape>');
 
 -- jump to next/previous diagnostic error/warning
-vim.keymap.set('n', ']g', vim.diagnostic.goto_next, opts);
-vim.keymap.set('n', '[g', vim.diagnostic.goto_prev, opts)
+vim.keymap.set('n', ']g', function ()
+	vim.diagnostic.jump({count = 1, float = true})
+end);
+vim.keymap.set('n', '[g', function ()
+	vim.diagnostic.jump({count = -1, float = true})
+end);
 
 vim.keymap.set(
 	'n',
@@ -179,5 +214,35 @@ end, {});
 vim.api.nvim_create_user_command('Flush', function() 
     vim.cmd([[%bd]]);
 end, {});
+
+-- Global diagnostic configuration
+vim.diagnostic.config({
+	-- Ensure virtual text next to code stays clean
+	virtual_text = {
+		spacing = 4,
+		prefix = '●',
+	},
+
+	-- Configure the popup windows specifically
+	float = {
+		border = "rounded",  -- Visual consistency with your signature window
+		focusable = false,
+
+		-- THE FIXES FOR CUT-OFF TEXT:
+		wrap = true,         -- Forces long messages to cascade onto multiple lines
+		max_width = 80,      -- Prevents the window from stretching off the physical screen
+		header = "",         -- Removes redundant "Diagnostics:" header text to save space
+		prefix = function(diagnostic, i, total)
+			-- Optional: Custom bullet structure to index multiple errors cleanly
+			local severity = vim.diagnostic.severity[diagnostic.severity]
+			return string.format("%d. [%s] ", i, severity)
+		end,
+	},
+})
+
+-- Pressing 'gl' (Go Line) or 'Space + e' pops up the wrapped error window
+vim.keymap.set('n', 'gl', vim.diagnostic.open_float, { desc = "Show line diagnostic wrap window" })
+
+
 
 print('remaps initialized!')
